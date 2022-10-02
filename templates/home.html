@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>GYM Assistant</title>
+	<link rel="stylesheet" type="text/css" 
+		href="{{ url_for('static', filename = 'style.css') }}">
+	<script type="text/javascript" 
+		src="{{ url_for('static', filename = 'func.js') }}"></script>
+</head>
+
+<body>
+
+	<button >
+		Start
+	</button>
+
+	<img src="{{ url_for('video') }}" width="50%"/>
+
+	<div>
+		Left: {{ counter }} <br>
+		Right: {{ counter_2 }} <br>
+	</div>
+	
+</body>
+
+</html>
