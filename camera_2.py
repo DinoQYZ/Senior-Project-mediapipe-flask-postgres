@@ -1,4 +1,4 @@
-import cv2
+import cv2, sys
 import mediapipe as mp
 import numpy as np
 mp_drawing = mp.solutions.drawing_utils
@@ -169,7 +169,12 @@ def biceps_curl(results, image, stats):
         
         determineStats(160, 30, angle_L, angle_R, stats, True)
             
-    except:
+    except Exception as err:
+        _, _, ex_tb = sys.exc_info()
+        filename = ex_tb.tb_frame.f_code.co_filename
+        line_number = ex_tb.tb_lineno
+        print('error file:', filename, ', on line', line_number)
+        print('>>', err)
         pass
 
 class Video(object):
@@ -190,7 +195,7 @@ class Video(object):
             # Recolor image to RGB
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image.flags.writeable = False
-          
+            
             # Make detection
             results = pose.process(image)
         
@@ -198,6 +203,8 @@ class Video(object):
             image.flags.writeable = True
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             
+            # image = cv2.flip(image, 1)
+
             biceps_curl(results, image, stats)
         
             cv2PutStats(results, image, stats)
