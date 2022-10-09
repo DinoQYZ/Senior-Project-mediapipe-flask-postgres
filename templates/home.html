@@ -13,10 +13,15 @@
 
 	<img src="{{ url_for('video') }}"/>
 
-	<div>
-		Left: {{ counter }} <br>
-		Right: {{ counter_2 }} <br>
-	</div>
+	<h2>Data : </h2>
+	<table>
+		{% for key, value in stats.items() %}
+		<tr>
+			<th> {{ key }} </th>
+			<td> {{ value }} </td>
+		</tr>
+		{% endfor %}
+	</table>
 	
 </body>
 

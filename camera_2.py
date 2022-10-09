@@ -3,6 +3,10 @@ import mediapipe as mp
 import numpy as np
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
+stats = {"counter_L":0, "counter_R":0, "stage_L":None, "stage_R":None}
+
+def getStats():
+    return stats
 
 def calculate_angle(a,b,c):
     a = np.array(a) # First
@@ -177,8 +181,85 @@ def biceps_curl(results, image, stats):
         print('>>', err)
         pass
 
-class Video(object):
+def squat(results, image, stats):
+    try:
+        global landmarks
+        landmarks = results.pose_landmarks.landmark
 
+        # Get coordinates
+        p1_L, p2_L, p3_L = get_point(23), get_point(25), get_point(27)
+
+        # Calculate angle
+        angle_L = calculate_angle(p1_L, p2_L, p3_L)
+        angle_R = 360
+
+        # Visualize angle
+        cv2.putText(image, str(angle_L), 
+                        tuple(np.multiply(p2_L, [640, 480]).astype(int)), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+
+        determineStats(170, 150, angle_L, angle_R, stats, True)
+
+    except:
+        pass
+
+def shoulder_press(results, image, stats):
+    # Extract landmarks
+    try:
+        global landmarks
+        landmarks = results.pose_landmarks.landmark
+        
+        # Get coordinates
+        p1_L, p2_L, p3_L = get_point(11), get_point(13), get_point(15)
+        p1_R, p2_R, p3_R = get_point(12), get_point(14), get_point(16)
+        
+        # Calculate angle
+        angle_L = calculate_angle(p1_L, p2_L, p3_L )
+        angle_R = calculate_angle(p1_R, p2_R, p3_R)
+        
+        # Visualize angle
+        cv2.putText(image, str(round(angle_L, 2)), 
+                    tuple(np.multiply(p2_L, [640, 480]).astype(int)), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+
+        cv2.putText(image, str(round(angle_R, 2)), 
+                    tuple(np.multiply(p2_R, [640, 480]).astype(int)), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+
+        determineStats(165, 55, angle_L, angle_R, stats, False)
+                
+    except:
+        pass
+
+def lateral_raise(results, image, stats):
+    try:
+        global landmarks
+        landmarks = results.pose_landmarks.landmark
+        
+        # Get coordinates
+        p1_L, p2_L, p3_L = get_point(23), get_point(11), get_point(15)
+        p1_R, p2_R, p3_R = get_point(24), get_point(12), get_point(16)
+        
+        # Calculate angle
+        angle_L = calculate_angle(p1_L, p2_L, p3_L)
+        angle_R = calculate_angle(p1_R, p2_R, p3_R)
+        
+        # Visualize angle
+        cv2.putText(image, str(round(angle_L, 2)), 
+                    tuple(np.multiply(p2_L, [640, 480]).astype(int)), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+
+        cv2.putText(image, str(round(angle_R, 2)), 
+                    tuple(np.multiply(p2_R, [640, 480]).astype(int)), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)
+        
+        # Curl counter logic
+        determineStats(80, 20, angle_L, angle_R, stats, False)
+                
+    except:
+        pass
+
+class Video(object):
     def __init__(self):
         self.cap=cv2.VideoCapture(0)
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1200)
@@ -186,9 +267,7 @@ class Video(object):
     def __del__(self):
         self.cap.release()
 
-    def get_frame(self):
-        global stats
-        stats = {"counter_L":0, "counter_R":0, "stage_L":None, "stage_R":None}
+    def get_frame(self, function):
         with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
             _, image = self.cap.read()
 
@@ -205,7 +284,7 @@ class Video(object):
             
             # image = cv2.flip(image, 1)
 
-            biceps_curl(results, image, stats)
+            function(results, image, stats)
         
             cv2PutStats(results, image, stats)
 
