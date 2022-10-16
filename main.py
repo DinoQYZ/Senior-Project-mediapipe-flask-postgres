@@ -1,38 +1,47 @@
 from flask import Flask, render_template, Response
 from gym_assistant import *
-import cv2
-
-#Python Flask 入門指南
-#https://youtu.be/AiUzsr5JZgQ
+import mediapipe as mp
+from camera import *
+mp_drawing = mp.solutions.drawing_utils
+mp_pose = mp.solutions.pose
 
 app = Flask(__name__)
-camera = cv2.VideoCapture(0)
 
-# @app.route('/home')
-# def testPrint():
-#     data = {'A':30, 'B':90, 'C':75}
-
-def generate_frames():
-    while True:
-            
-        ## read the camera frame
-        success,frame=camera.read()
-        if not success:
-            break
-        else:
-            ret,buffer=cv2.imencode('.jpg',frame)
-            frame=buffer.tobytes()
-
-        yield(b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-                   
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/home')
+def home():
+    clearStats()
     return render_template('home.html')
 
-@app.route('/video')
-def video():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+@app.route('/action', methods=['POST', 'GET'])
+def action():
+    stats = getStats()
+    return render_template('action.html', stats=stats)
+
+def gen(camera, function):
+    while True:
+        global frame
+        frame=camera.get_frame(function)
+        yield(b'--frame\r\n' b'Content-Type:  image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
+
+@app.route('/video/bisceps_curl')
+def video_biceps_curl():
+    return Response(gen(Video(), biceps_curl), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video/lateral_raise')
+def video_lateral_raise():
+    return Response(gen(Video(), lateral_raise), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video/shoulder_press')
+def video_shoulder_press():
+    return Response(gen(Video(), shoulder_press), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/video/squat')
+def video_squat():
+    return Response(gen(Video(), squat), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__=="__main__":
     app.run('0.0.0.0', debug=True)
