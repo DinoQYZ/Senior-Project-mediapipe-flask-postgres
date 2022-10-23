@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GYM Assistant</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename = 'func.js') }}"></script>
+</head>
+
+<body>
+    <h1>Index page</h1>
+
+    <select id="actionChoose">
+        <option value="0" name="biceps_curl">Biceps_curl</option>
+        <option value="1" name="squat">Squat</option>
+        <option value="2" name="shoulder_press">Shoulder_press</option>
+        <option value="3" name="lateral_raise">Lateral_raise</option>
+    </select>
+
+    <div id="camara_display"></div>
+
+    <div>
+        <br>
+        <button id="startBtn" onclick="determineVid(); showCloseBtn();">Start</button>
+        <button id="closeBtn" onclick="closeVid(); showStartBtn();">Close</button>
+    </div>
+
+</body>
+
+</html>

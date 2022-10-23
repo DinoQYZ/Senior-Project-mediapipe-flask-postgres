@@ -11,6 +11,11 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route('/test')
+def test():
+    clearStats()
+    return render_template('test.html')
+
 @app.route('/home')
 def home():
     clearStats()
