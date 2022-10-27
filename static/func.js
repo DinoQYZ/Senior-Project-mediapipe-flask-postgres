@@ -7,7 +7,6 @@ function determineVid() {
     }
 
     var src = "{{ url_for('" + val + "') }}";
-    alert(src);
 
     var img = document.createElement("img");
     img.src = src;
@@ -30,4 +29,6 @@ function showStartBtn() {
     document.getElementById('startBtn').style.display = "block";
     document.getElementById('closeBtn').style.display = "none";
 }
+
+
 

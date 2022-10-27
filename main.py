@@ -22,9 +22,24 @@ def home():
     return render_template('home.html')
 
 @app.route('/action', methods=['POST', 'GET'])
-def action():
+def action1():
     stats = getStats()
-    return render_template('action.html', stats=stats)
+    return render_template('action/action1.html', stats=stats)
+
+@app.route('/action', methods=['POST', 'GET'])
+def action2():
+    stats = getStats()
+    return render_template('action/action2.html', stats=stats)
+
+@app.route('/action', methods=['POST', 'GET'])
+def action3():
+    stats = getStats()
+    return render_template('action/action3.html', stats=stats)
+
+@app.route('/action', methods=['POST', 'GET'])
+def action4():
+    stats = getStats()
+    return render_template('action/action4.html', stats=stats)
 
 def gen(camera, function):
     while True:
