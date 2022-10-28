@@ -9,7 +9,8 @@ def getStats():
     return stats
 
 def clearStats():
-    stats = {"counter_L":0, "counter_R":0, "stage_L":None, "stage_R":None}
+    stats["counter_L"]=0
+    stats["counter_R"]=0
 
 def calculate_angle(a,b,c):
     a = np.array(a) # First
@@ -268,8 +269,7 @@ class Video(object):
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1200)
 
     def __del__(self):
-        stats["counter_L"]=0
-        stats["counter_R"]=0
+        clearStats()
         self.cap.release()
 
     def get_frame(self, function):

@@ -7,14 +7,10 @@ mp_pose = mp.solutions.pose
 
 app = Flask(__name__)
 
+@app.route('/index')
 @app.route('/')
 def index():
     return render_template('index.html')
-
-@app.route('/test')
-def test():
-    clearStats()
-    return render_template('test.html')
 
 @app.route('/home')
 def home():
@@ -26,17 +22,17 @@ def action1():
     stats = getStats()
     return render_template('action/action1.html', stats=stats)
 
-@app.route('/action', methods=['POST', 'GET'])
+@app.route('/action2', methods=['POST', 'GET'])
 def action2():
     stats = getStats()
     return render_template('action/action2.html', stats=stats)
 
-@app.route('/action', methods=['POST', 'GET'])
+@app.route('/action3', methods=['POST', 'GET'])
 def action3():
     stats = getStats()
     return render_template('action/action3.html', stats=stats)
 
-@app.route('/action', methods=['POST', 'GET'])
+@app.route('/action4', methods=['POST', 'GET'])
 def action4():
     stats = getStats()
     return render_template('action/action4.html', stats=stats)
