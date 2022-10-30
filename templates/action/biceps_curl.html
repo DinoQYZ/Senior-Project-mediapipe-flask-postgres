@@ -4,6 +4,7 @@
 <head>
     <title>GYM Assistant</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/main.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/style.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename = 'js/func.js') }}"></script>
     <script src="{{ url_for('static', filename = 'js/assets/js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename = 'js/browser.min.js') }}"></script>
@@ -92,7 +93,7 @@
                                     </div>
 
                                     <div  class="col-3">
-                                        <a href="{{ url_for('home') }}" class="button-large">
+                                        <a href="{{ url_for('action') }}" class="button-large">
                                             <font color="#fff">Back</font>
                                         </a>
                                     </div>

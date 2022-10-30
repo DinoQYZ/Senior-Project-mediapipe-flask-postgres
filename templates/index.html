@@ -4,6 +4,7 @@
 <head>
 	<title>GYM Assistant</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/main.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/style.css') }}">
 	<script type="text/javascript" src="{{ url_for('static', filename = 'js/func.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/assets/js/jquery.min.js') }}"></script>
 	<script src="{{ url_for('static', filename = 'js/browser.min.js') }}"></script>
@@ -49,7 +50,7 @@
 
 							<!-- Banner Copy -->
 							<p>We do something really useful, important, and unique. Learn all about it here ...</p>
-							<a href="{{ url_for('home') }}" class="button-large">開始健身</a>
+							<a href="{{ url_for('action') }}" class="button-large">開始健身</a>
 
 						</div>
 						<div class="col-6 col-12-medium imp-medium">
