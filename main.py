@@ -1,17 +1,23 @@
 from flask import Flask, render_template, Response
-from gym_assistant import *
+from connect import *
 import mediapipe as mp
 from camera import *
+
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
+conInfo = {'host':'192.168.56.1', 'dbname':'dino', 'user':'dino', 'password':'dinopwd', 'sslmode':'disable'}
+cursor = connDB(conInfo)
+
+# Flask app
 app = Flask(__name__)
 
+# declare html page
 @app.route('/index')
 @app.route('/')
 def index():
     return render_template('index.html')
-
+    
 @app.route('/action')
 def action():
     clearStats()
@@ -37,12 +43,14 @@ def action_lateral_raise():
     stats = getStats()
     return render_template('action/lateral_raise.html', stats=stats)
 
+# generate camara
 def gen(camera, function):
     while True:
         global frame
         frame=camera.get_frame(function)
         yield(b'--frame\r\n' b'Content-Type:  image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+# each camera of action
 @app.route('/video/bisceps_curl')
 def video_biceps_curl():
     return Response(gen(Video(), biceps_curl), mimetype='multipart/x-mixed-replace; boundary=frame')
@@ -59,5 +67,6 @@ def video_shoulder_press():
 def video_squat():
     return Response(gen(Video(), squat), mimetype='multipart/x-mixed-replace; boundary=frame')
 
+# run
 if __name__=="__main__":
     app.run('0.0.0.0', debug=True)

@@ -1,8 +1,12 @@
 import cv2, sys
 import mediapipe as mp
 import numpy as np
+from datetime import datetime
+from connect import *
+
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
+currentAction = ''
 stats = {"counter_L":0, "counter_R":0, "stage_L":None, "stage_R":None}
 
 def getStats():
@@ -269,6 +273,11 @@ class Video(object):
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1200)
 
     def __del__(self):
+        cursor = getCursor()
+        cursor.execute("""
+        INSERT INTO myrecord (Action, Reps_L, Reps_R, Time) VALUES
+        (%s,%s,%s,%s)
+        """, (currentAction, stats["counter_L"], stats["counter_R"], datetime.now()))
         clearStats()
         self.cap.release()
 
@@ -288,7 +297,7 @@ class Video(object):
             image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
             
             # image = cv2.flip(image, 1)
-
+            currentAction = function.__name__
             function(results, image, stats)
         
             cv2PutStats(results, image, stats)

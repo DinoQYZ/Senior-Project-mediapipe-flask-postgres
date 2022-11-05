@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  psql-snpj:
+    container_name: psql-snpj
+    image: postgres:12
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=dino
+      - POSTGRES_PASSWORD=dinopwd
+      - POSTGRES_DB=dino
+    volumes:
+      - /senior_project/postgres_data:/var/lib/postgresql/data
