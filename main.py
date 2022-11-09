@@ -2,9 +2,11 @@ from flask import Flask, render_template, Response
 from connect import *
 import mediapipe as mp
 from camera import *
+from datetime import datetime
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
+currentAction = ''
 
 conInfo = {'host':'192.168.56.1', 'dbname':'dino', 'user':'dino', 'password':'dinopwd', 'sslmode':'disable'}
 cursor = connDB(conInfo)
@@ -20,7 +22,18 @@ def index():
     
 @app.route('/action')
 def action():
-    clearStats()
+    stats = getStats()
+    if stats['counter_L']!=0 or stats['counter_R']!=0:
+
+        # insert record to db
+        cursor = getCursor()
+        cursor.execute("""
+        INSERT INTO myrecord VALUES (%s, %s, %s, %s)
+        """, (currentAction, stats["counter_L"], stats["counter_R"], str(datetime.now())[:19])
+        )
+
+        # clear stats
+        clearStats()
     return render_template('action.html')
 
 @app.route('/action/biceps_curl', methods=['POST', 'GET'])
@@ -43,8 +56,13 @@ def action_lateral_raise():
     stats = getStats()
     return render_template('action/lateral_raise.html', stats=stats)
 
+def setCurrentAction(actionName):
+    global currentAction
+    currentAction = actionName
+
 # generate camara
 def gen(camera, function):
+    setCurrentAction(function.__name__)
     while True:
         global frame
         frame=camera.get_frame(function)
