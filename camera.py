@@ -179,12 +179,7 @@ def biceps_curl(results, image, stats):
         
         determineStats(160, 30, angle_L, angle_R, stats, True)
             
-    except Exception as err:
-        _, _, ex_tb = sys.exc_info()
-        filename = ex_tb.tb_frame.f_code.co_filename
-        line_number = ex_tb.tb_lineno
-        print('error file:', filename, ', on line', line_number)
-        print('>>', err)
+    except:
         pass
 
 def squat(results, image, stats):
@@ -271,12 +266,6 @@ class Video(object):
         self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1200)
 
     def __del__(self):
-        # cursor = getCursor()
-        # cursor.execute("""
-        # INSERT INTO myrecord (Action, Reps_L, Reps_R, Time) VALUES
-        # (%s,%s,%s,%s)
-        # """, (currentAction, stats["counter_L"], stats["counter_R"], datetime.now()))
-        # clearStats()
         self.cap.release()
 
     def get_frame(self, function):

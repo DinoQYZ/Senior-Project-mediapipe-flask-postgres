@@ -1,7 +1,21 @@
 version: '3'
 
 services:
-  psql-snpj:
+  # flask:
+  #   container_name: flaskapp
+  #   build: 
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     - APP_NAME=FlaskApp
+  #   expose:
+  #     - 5000
+  #   depends_on:
+  #     - psql
+  #   volumes:
+  #     - .:/app
+
+  psql:
     container_name: psql-snpj
     image: postgres:12
     ports:

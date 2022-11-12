@@ -9,7 +9,7 @@ mp_pose = mp.solutions.pose
 currentAction = ''
 
 conInfo = {'host':'192.168.56.1', 'dbname':'dino', 'user':'dino', 'password':'dinopwd', 'sslmode':'disable'}
-cursor = connDB(conInfo)
+cursor, conn = connDB(conInfo)
 
 # Flask app
 app = Flask(__name__)
@@ -20,18 +20,28 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
     
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
+
 @app.route('/action')
 def action():
     stats = getStats()
     if stats['counter_L']!=0 or stats['counter_R']!=0:
 
         # insert record to db
-        cursor = getCursor()
         cursor.execute("""
-        INSERT INTO myrecord VALUES (%s, %s, %s, %s)
-        """, (currentAction, stats["counter_L"], stats["counter_R"], str(datetime.now())[:19])
-        )
+        INSERT INTO myrecord (action, reps_l, reps_r, time) VALUES (%s, %s, %s, %s);
+        """, (currentAction, stats["counter_L"], stats["counter_R"], str(datetime.now())[:19]))
 
+        conn.commit()
+
+        print('currentAction={}, stats:L{} R{}, time:{}'.format(
+            currentAction, stats["counter_L"], stats["counter_R"], str(datetime.now())[:19]))
         # clear stats
         clearStats()
     return render_template('action.html')

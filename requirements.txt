@@ -1,0 +1,5 @@
+flask
+opencv-python
+mediapipe
+psycopg2
+numpy

@@ -139,7 +139,7 @@ mark {
 	color: inherit;
 }
 
-input::-moz-focus-inner {
+/* input::-moz-focus-inner {
 	border: 0;
 	padding: 0;
 }
@@ -149,7 +149,7 @@ input, select, textarea {
 	-webkit-appearance: none;
 	-ms-appearance: none;
 	appearance: none;
-}
+} */
 
 /* Basic */
 
@@ -175,7 +175,7 @@ input, select, textarea {
 		font-size: 13.5pt;
 		font-family: 'Yanone Kaffeesatz';
 		line-height: 1.85em;
-		font-weight: 300;
+		font-weight: 350;
 	}
 
 	ul, ol, p, dl {
