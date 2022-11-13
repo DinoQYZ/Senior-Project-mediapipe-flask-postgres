@@ -1,8 +1,11 @@
 from flask import Flask, render_template, Response
 from connect import *
 import mediapipe as mp
-from camera import *
 from datetime import datetime
+
+from connect import *
+from camera import *
+
 
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
@@ -19,6 +22,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
     
 @app.route('/login')
 def login():
@@ -28,6 +35,11 @@ def login():
 def register():
     return render_template('register.html')
 
+@app.route('/logout')
+def logout():
+   print('not done')
+
+# action list page
 @app.route('/action')
 def action():
     stats = getStats()
