@@ -43,26 +43,6 @@
 					</div>
 				</div>
 			</div>
-			<div id="banner">
-				<div class="container">
-					<div class="row">
-						<div class="col-6 col-12-medium">
-
-							<!-- Banner Copy -->
-							<p>We do something really useful, important, and unique. Learn all about it here ...</p>
-							<a href="{{ url_for('action') }}" class="button-large">開始健身</a>
-
-						</div>
-						<div class="col-6 col-12-medium imp-medium">
-
-							<!-- Banner Image -->
-							<a href="#" class="bordered-feature-image"><img
-									src="{{ url_for('static', filename = 'images/banner.jpg') }}" alt="" /></a>
-
-						</div>
-					</div>
-				</div>
-			</div>
 		</section>
 
 
@@ -76,15 +56,15 @@
 							<section>
 								<header>
 									<h2>Login</h2>
-									<h3>Don't have account? <a href="{{ url_for('register.html') }}">Register</a></h3>
+									<h3>Don't have account? <a href="{{ url_for('register') }}">Register</a></h3>
 								</header>
 								<p>
 									Username
-									<br><input class="" type="" name="">
+									<br><input type="text" name="username" placeholder="Enter your username...">
 								</p>
 								<p>
 									Password
-									<br><input class="" type="Password" name="">
+									<br><input type="Password" name="password" placeholder="Enter your password...">
 								</p>
 								<p>
 									<a href="" class="button-large">
