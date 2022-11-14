@@ -1,31 +1,44 @@
-from flask import Flask, render_template, Response
-from connect import *
+from flask import Flask, render_template, Response, redirect, url_for
 import mediapipe as mp
 from datetime import datetime
 
-from connect import *
+from dbFunc import *
 from camera import *
+from login import *
 
-
+# var setup
 mp_drawing = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 currentAction = ''
 
-conInfo = {'host':'192.168.56.1', 'dbname':'dino', 'user':'dino', 'password':'dinopwd', 'sslmode':'disable'}
+# connect db
+conInfo = {
+    'host':'192.168.56.1', 
+    'dbname':'dino', 
+    'user':'dino', 
+    'password':'dinopwd', 
+    'sslmode':'disable'
+    }
 cursor, conn = connDB(conInfo)
+
+# login
+loginstats = initLoginStats()
 
 # Flask app
 app = Flask(__name__)
 
-# declare html page
+# default page
 @app.route('/index')
 @app.route('/')
 def index():
     return render_template('index.html')
 
+# user page
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    if loginstats['loggedin'] == True:
+        return render_template('profile.html')
+    return redirect(url_for('login'))
     
 @app.route('/login')
 def login():
@@ -42,42 +55,40 @@ def logout():
 # action list page
 @app.route('/action')
 def action():
+    # check if counter not 0 then insert record
     stats = getStats()
     if stats['counter_L']!=0 or stats['counter_R']!=0:
 
         # insert record to db
-        cursor.execute("""
-        INSERT INTO myrecord (action, reps_l, reps_r, time) VALUES (%s, %s, %s, %s);
-        """, (currentAction, stats["counter_L"], stats["counter_R"], str(datetime.now())[:19]))
-
-        conn.commit()
-
-        print('currentAction={}, stats:L{} R{}, time:{}'.format(
-            currentAction, stats["counter_L"], stats["counter_R"], str(datetime.now())[:19]))
+        insertActionCompleted(conn, cursor, {
+            'action':currentAction,
+            'reps_l':stats['counter_L'],
+            'reps_r':stats['counter_R'],
+            'time':str(datetime.now())[:19]
+        })
+        
         # clear stats
         clearStats()
     return render_template('action.html')
 
+# all action pages
 @app.route('/action/biceps_curl', methods=['POST', 'GET'])
 def action_biceps_curl():
-    stats = getStats()
-    return render_template('action/biceps_curl.html', stats=stats)
+    return render_template('action/biceps_curl.html')
 
 @app.route('/action/squat', methods=['POST', 'GET'])
 def action_squat():
-    stats = getStats()
-    return render_template('action/squat.html', stats=stats)
+    return render_template('action/squat.html')
 
 @app.route('/action/shoulder_press', methods=['POST', 'GET'])
 def action_shoulder_press():
-    stats = getStats()
-    return render_template('action/shoulder_press.html', stats=stats)
+    return render_template('action/shoulder_press.html')
 
 @app.route('/action/lateral_raise', methods=['POST', 'GET'])
 def action_lateral_raise():
-    stats = getStats()
-    return render_template('action/lateral_raise.html', stats=stats)
+    return render_template('action/lateral_raise.html')
 
+# set current action
 def setCurrentAction(actionName):
     global currentAction
     currentAction = actionName

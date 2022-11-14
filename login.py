@@ -1,4 +1,4 @@
-from connect import *
+
 
 loginstats = {
     'loggedin':False,
@@ -7,5 +7,6 @@ loginstats = {
     'password':''
 }
 
-
+def initLoginStats():
+    return loginstats
 
