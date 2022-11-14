@@ -1,9 +1,10 @@
-from flask import Flask, render_template, Response, redirect, url_for
-import mediapipe as mp
 from datetime import datetime
 
-from dbFunc import *
+import mediapipe as mp
+from flask import Flask, Response, redirect, render_template, url_for
+
 from camera import *
+from dbFunc import *
 from login import *
 
 # var setup
