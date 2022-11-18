@@ -4,11 +4,15 @@ from flask import Flask, Response, redirect, render_template, url_for, request
 
 from camera import *
 from dbFunc import *
-from login import *
 
 # var setup
 currentAction = ''
-loginStats = initLoginStats()
+loginStats = {
+    'loggedin':False,
+    'id':'',
+    'username':'',
+    'password':''
+}
 
 # connect db
 cursor, conn = connDB({
@@ -40,23 +44,36 @@ def login():
     if request.method =='POST':
         USERNAME = request.values['username']
         PASSWORD = request.values['password']
-        result, logMsg = userlogin(cursor, USERNAME, PASSWORD)
+        result, logMsg = userLogin(cursor, USERNAME, PASSWORD)
         if logMsg == '':
-            loginStats['loggedin'] = True
-            loginStats['id'] = result[0][0]
-            loginStats['username'] = result[0][1]
-            loginStats['password'] = result[0][2]
+            changeLoginStats(True, result[0][0], result[0][1], result[0][2])
             return redirect(url_for('profile'))
 
     return render_template('login.html')
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
+    if request.method =='POST':
+        USERNAME = request.values['username']
+        PASSWORD = request.values['password']
+        PASSWORD_R = request.values['password_r']
+        logMsg = userRegister(cursor, USERNAME, PASSWORD, PASSWORD_R)
+        if logMsg == '':
+            return redirect(url_for('login'))
+
     return render_template('register.html')
 
 @app.route('/logout')
 def logout():
-   print('not done')
+    changeLoginStats(False, '', '', '')
+    return redirect(url_for('profile'))
+
+# change login stats
+def changeLoginStats(loggedin, id, username, password):
+    loginStats['loggedin'] = loggedin
+    loginStats['id'] = id
+    loginStats['username'] = username
+    loginStats['password'] = password
 
 # action list page
 @app.route('/action')
@@ -67,6 +84,7 @@ def action():
 
         # insert record to db
         insertActionCompleted(conn, cursor, {
+            'username':loginStats['username'],
             'action':currentAction,
             'reps_l':stats['counter_L'],
             'reps_r':stats['counter_R'],

@@ -15,13 +15,13 @@ def connDB(conInfo):
 # insert your record
 def insertActionCompleted(conn, cursor, value):
     cursor.execute("""
-    INSERT INTO myrecord (action, reps_l, reps_r, time) VALUES (%s, %s, %s, %s);
-    """, (value['action'], value['reps_l'], value['reps_r'], value['time']))
+    INSERT INTO myrecord (username, action, reps_l, reps_r, time) VALUES (%s, %s, %s, %s, %s);
+    """, (value['username'], value['action'], value['reps_l'], value['reps_r'], value['time']))
 
     conn.commit()
 
 # return log
-def userlogin(cursor, username, password):
+def userLogin(cursor, username, password):
     logMsg = ''
     cursor.execute("SELECT * FROM usertable WHERE username=\'{}\'".format(username))
     result = cursor.fetchall()
@@ -34,4 +34,21 @@ def userlogin(cursor, username, password):
         logMsg = 'Username {} not found'.format(username)
     
     return result, logMsg
+
+# register
+def userRegister(cursor, username, password, password_r):
+    logMsg = ''
+    cursor.execute("SELECT * FROM usertable WHERE username=\'{}\'".format(username))
+    result = cursor.fetchall()
+    if not result:
+        if password == password_r:
+            cursor.execute("""
+            INSERT INTO usertable (username, password) VALUES (\'{}\', \'{}\')
+            """.format(username, password))
+        else:
+            logMsg = 'Password not match'
+    else:
+        logMsg = 'Username {} already exist'.format(username)
+    
+    return logMsg
 
