@@ -58,34 +58,19 @@
 									<h2>Login</h2>
 									<h3>Don't have account? <a href="{{ url_for('register') }}">Register</a></h3>
 								</header>
-								<form class="" action="{{ url_for('login') }}" method="post">
+								<form method="post">
 									<p>
 										Username
-										<br><input type="text" name="username" id="username" placeholder="Enter your username...">
+										<br><input type="text" name="username" placeholder="Enter your username...">
 									</p>
 									<p>
 										Password
-										<br><input type="Password" name="password" id="password" placeholder="Enter your password...">
+										<br><input type="Password" name="password" placeholder="Enter your password...">
 									</p>
 									<p>
-										<!-- <a href="" class="button-large">
-											<font color="#fff">Login</font>
-										</a> -->
 										<input type="submit" class="button-large" value="Login">
 									</p>
 								</form>
-								{% with messages = get_flashed_messages()  %}
-								{% if messages %}
-								{% for message in messages %}
-								<div class="alert alert-success alert-dismissible fade show" role="alert">
-								{{ message }}
-								<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-								</div>
-								{% endfor %}
-								{% endif %}
-								{% endwith %}
 							</section>
 
 					</div>

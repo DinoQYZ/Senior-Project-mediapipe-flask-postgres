@@ -20,3 +20,18 @@ def insertActionCompleted(conn, cursor, value):
 
     conn.commit()
 
+# return log
+def userlogin(cursor, username, password):
+    logMsg = ''
+    cursor.execute("SELECT * FROM usertable WHERE username=\'{}\'".format(username))
+    result = cursor.fetchall()
+    if result:
+        if result[0][2] == password:
+            logMsg = ''
+        else:
+            logMsg = 'incorrect password of user \'{}\''.format(username)
+    else:
+        logMsg = 'Username {} not found'.format(username)
+    
+    return result, logMsg
+

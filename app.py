@@ -1,29 +1,23 @@
 from datetime import datetime
 
-import mediapipe as mp
-from flask import Flask, Response, redirect, render_template, url_for
+from flask import Flask, Response, redirect, render_template, url_for, request
 
 from camera import *
 from dbFunc import *
 from login import *
 
 # var setup
-mp_drawing = mp.solutions.drawing_utils
-mp_pose = mp.solutions.pose
 currentAction = ''
+loginStats = initLoginStats()
 
 # connect db
-conInfo = {
+cursor, conn = connDB({
     'host':'192.168.56.1', 
     'dbname':'dino', 
     'user':'dino', 
     'password':'dinopwd', 
     'sslmode':'disable'
-    }
-cursor, conn = connDB(conInfo)
-
-# login
-loginstats = initLoginStats()
+})
 
 # Flask app
 app = Flask(__name__)
@@ -37,12 +31,23 @@ def index():
 # user page
 @app.route('/profile')
 def profile():
-    if loginstats['loggedin'] == True:
-        return render_template('profile.html')
+    if loginStats['loggedin'] == True:
+        return render_template('profile.html', loginStats=loginStats)
     return redirect(url_for('login'))
     
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    if request.method =='POST':
+        USERNAME = request.values['username']
+        PASSWORD = request.values['password']
+        result, logMsg = userlogin(cursor, USERNAME, PASSWORD)
+        if logMsg == '':
+            loginStats['loggedin'] = True
+            loginStats['id'] = result[0][0]
+            loginStats['username'] = result[0][1]
+            loginStats['password'] = result[0][2]
+            return redirect(url_for('profile'))
+
     return render_template('login.html')
 
 @app.route('/register')

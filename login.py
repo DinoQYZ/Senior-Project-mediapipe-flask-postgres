@@ -1,6 +1,4 @@
-
-
-loginstats = {
+loginStats = {
     'loggedin':False,
     'id':'',
     'username':'',
@@ -8,5 +6,4 @@ loginstats = {
 }
 
 def initLoginStats():
-    return loginstats
-
+    return loginStats
