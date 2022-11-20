@@ -1,0 +1,36 @@
+{% extends 'layout/layout.html' %}
+{% block bodyContent %}
+<!-- Content -->
+<section id="content">
+	<div class="container">
+		<div class="row">
+			<div class="col-9 col-12-medium">
+                {% block profileBodyContent %}
+			    {% endblock %}
+            </div>
+			<div class="col-3 col-12-medium">
+				<!-- Sidebar -->
+					<section>
+						<header>
+							<h2>Magna Phasellus</h2>
+						</header>
+						<ul class="link-list">
+							<li><a href="{{ url_for('profile') }}">Profile</a></li>
+							<li><a href="{{ url_for('profile_myrecord') }}">My record</a></li>
+							<li><a href="#">Set a goal</a></li>
+							<li><a href="{{ url_for('logout') }}">Logout</a></li>
+						</ul>
+					</section>
+					<section>
+						<header>
+							<h2>Danger</h2>
+						</header>
+						<ul class="link-list">
+							<li><a href="#">Delete account</a></li>
+						</ul>
+					</section>
+			</div>
+		</div>
+	</div>
+</section>
+{% endblock %}

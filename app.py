@@ -70,6 +70,11 @@ def logout():
     changeLoginStats(False, '')
     return redirect(url_for('profile'))
 
+# profile
+@app.route('/profile/myrecord')
+def profile_myrecord():
+    return render_template('profile_myrecord.html', loginStats=loginStats)
+
 # change login stats
 def changeLoginStats(loggedin, username):
     loginStats[0] = loggedin
