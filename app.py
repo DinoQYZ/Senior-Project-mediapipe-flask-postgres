@@ -1,18 +1,11 @@
 from datetime import datetime
+import logging
 
 from flask import Flask, Response, redirect, render_template, url_for, request
 
 from camera import *
 from dbFunc import *
-
-# var setup
-currentAction = ''
-loginStats = {
-    'loggedin':False,
-    'id':'',
-    'username':'',
-    'password':''
-}
+from table import *
 
 # connect db
 cursor, conn = connDB({
@@ -22,6 +15,11 @@ cursor, conn = connDB({
     'password':'dinopwd', 
     'sslmode':'disable'
 })
+
+setupTables(cursor, conn)
+# var setup
+currentAction = ''
+loginStats = getLoginStats(cursor)[0]
 
 # Flask app
 app = Flask(__name__)
@@ -35,7 +33,7 @@ def index():
 # user page
 @app.route('/profile')
 def profile():
-    if loginStats['loggedin'] == True:
+    if loginStats[0] == True:
         return render_template('profile.html', loginStats=loginStats)
     return redirect(url_for('login'))
     
@@ -46,8 +44,10 @@ def login():
         PASSWORD = request.values['password']
         result, logMsg = userLogin(cursor, USERNAME, PASSWORD)
         if logMsg == '':
-            changeLoginStats(True, result[0][0], result[0][1], result[0][2])
+            changeLoginStats(True, result[0][1])
             return redirect(url_for('profile'))
+        else:
+            logging.info(logMsg)
 
     return render_template('login.html')
 
@@ -60,20 +60,21 @@ def register():
         logMsg = userRegister(cursor, USERNAME, PASSWORD, PASSWORD_R)
         if logMsg == '':
             return redirect(url_for('login'))
+        else:
+            logging.info(logMsg)
 
     return render_template('register.html')
 
 @app.route('/logout')
 def logout():
-    changeLoginStats(False, '', '', '')
+    changeLoginStats(False, '')
     return redirect(url_for('profile'))
 
 # change login stats
-def changeLoginStats(loggedin, id, username, password):
-    loginStats['loggedin'] = loggedin
-    loginStats['id'] = id
-    loginStats['username'] = username
-    loginStats['password'] = password
+def changeLoginStats(loggedin, username):
+    loginStats[0] = loggedin
+    loginStats[1] = username
+    updateLoginStats(loginStats, cursor, conn)
 
 # action list page
 @app.route('/action')

@@ -52,3 +52,12 @@ def userRegister(cursor, username, password, password_r):
     
     return logMsg
 
+def getLoginStats(cursor):
+    cursor.execute("SELECT * FROM loginstats;")
+    result = cursor.fetchall()
+    return result
+
+def updateLoginStats(loginStats, cursor, conn):
+    cursor.execute("UPDATE loginstats SET loggedin=\'{}\', username=\'{}\';".format(loginStats[0], loginStats[1]))
+    conn.commit()
+

@@ -1,3 +1,13 @@
+import logging
+
+def setupTables(cursor, conn):
+    L = [createUserTable, createRecordTable, createLoginStats]
+    for func in L:
+        try:
+            func(cursor, conn)
+        except Exception as e:
+            logging.info(e)
+
 def createUserTable(cursor, conn):
     sql = """
     CREATE TABLE usertable(

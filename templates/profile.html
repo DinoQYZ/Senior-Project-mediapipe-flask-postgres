@@ -29,7 +29,7 @@
 						<nav id="nav">
 							<ul class="drop-down-menu">
 								<li><a href="{{ url_for('index') }}">主頁</a></li>
-								<li><a href="#">動作介紹</a></li>
+								<li><a href="{{ url_for('action') }}">動作介紹</a></li>
 								<li><a href="#">使用教學</a></li>
 								<li><a href="{{ url_for('profile') }}">使用者</a>
 									<ul>
@@ -55,7 +55,7 @@
 						<!-- Main Content -->
 						<section>
 							<header>
-								<h2>{{loginStats.username}}</h2>
+								<h2>{{ loginStats[1] }}</h2>
 								<h3>Welcome to your profile</h3>
 							</header>
 							<p>
