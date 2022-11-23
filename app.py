@@ -18,6 +18,7 @@ cursor, conn = connDB({
 
 # initial create table if not exist
 setupTables(cursor, conn)
+
 # var setup
 currentAction = ''
 loginStats = getLoginStats(cursor)[0]
@@ -72,9 +73,10 @@ def logout():
     return redirect(url_for('profile'))
 
 # profile
-@app.route('/profile/myrecord')
+@app.route('/profile/myrecord', methods=['GET'])
 def profile_myrecord():
-    return render_template('profile_myrecord.html', loginStats=loginStats)
+    record = getRecordByAccount(loginStats, cursor)
+    return render_template('profile_myrecord.html', loginStats=loginStats, record=record)
 
 # change login stats
 def changeLoginStats(loggedin, username):
@@ -85,21 +87,22 @@ def changeLoginStats(loggedin, username):
 # action list page
 @app.route('/action')
 def action():
-    # check if counter not 0 then insert record
-    stats = getStats()
-    if stats['counter_L']!=0 or stats['counter_R']!=0:
+    if loginStats[1] != '':
+        # check if counter not 0 then insert record
+        stats = getStats()
+        if stats['counter_L']!=0 or stats['counter_R']!=0:
 
-        # insert record to db
-        insertActionCompleted(conn, cursor, {
-            'username':loginStats['username'],
-            'action':currentAction,
-            'reps_l':stats['counter_L'],
-            'reps_r':stats['counter_R'],
-            'time':str(datetime.now())[:19]
-        })
-        
-        # clear stats
-        clearStats()
+            # insert record to db
+            insertActionCompleted(conn, cursor, {
+                'username':loginStats['username'],
+                'action':currentAction,
+                'reps_l':stats['counter_L'],
+                'reps_r':stats['counter_R'],
+                'time':str(datetime.now())[:19]
+            })
+            
+            # clear stats
+            clearStats()
     return render_template('action.html')
 
 # all action pages

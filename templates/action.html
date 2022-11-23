@@ -1,43 +1,5 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-	<title>GYM Assistant</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/main.css') }}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'css/style.css') }}">
-	<script type="text/javascript" src="{{ url_for('static', filename = 'js/func.js') }}"></script>
-	<script src="{{ url_for('static', filename = 'js/assets/js/jquery.min.js') }}"></script>
-	<script src="{{ url_for('static', filename = 'js/browser.min.js') }}"></script>
-	<script src="{{ url_for('static', filename = 'js/breakpoints.min.js') }}"></script>
-	<script src="{{ url_for('static', filename = 'js/util.js') }}"></script>
-	<script src="{{ url_for('static', filename = 'js/main.js') }}"></script>
-</head>
-
-<body class="subpage">
-	<div id="page-wrapper">
-
-		<!-- Header -->
-		<section id="header">
-			<div class="container">
-				<div class="row">
-					<div class="col-12">
-
-						<!-- Logo -->
-						<h1><a href="{{ url_for('index') }}" id="logo">GYM Assistant</a></h1>
-
-						<!-- Nav -->
-						<nav id="nav">
-							<a href="{{ url_for('index') }}">主頁</a>
-							<a href="{{ url_for('action') }}">動作介紹</a>
-							<a href="#">使用教學</a>
-							<a href="{{ url_for('profile') }}">使用者</a>
-						</nav>
-
-					</div>
-				</div>
-			</div>
-		</section>
-
+{% extends 'layout/layout.html' %}
+{% block bodyContent %}
 		<!-- Content -->
 		<section id="content">
 			<div class="container">
@@ -56,21 +18,6 @@
 								<li><a href="#" onclick="show_action_list('action-list-4')">腹部</a></li>
 								<li><a href="#" onclick="show_action_list('action-list-5')">臀部</a></li>
 								<li><a href="#" onclick="show_action_list('action-list-6')">腿部</a></li>
-							</ul>
-						</section>
-						<section>
-							<header>
-								<h2>其他功能</h2>
-							</header>
-							<p>
-								Vehicula fermentum ligula at pretium. Suspendisse semper iaculis eros, eu aliquam
-								iaculis. Phasellus ultrices diam sit amet orci lacinia sed consequat.
-							</p>
-							<ul class="link-list">
-								<li><a href="#">功能一</a></li>
-								<li><a href="#">功能二</a></li>
-								<li><a href="#">功能三</a></li>
-								<li><a href="#">功能四</a></li>
 							</ul>
 						</section>
 
@@ -420,7 +367,7 @@
 										</a>
 									</div>
 									<div class="col-6">
-										<a href="action_squat" class="feature-image ">
+										<a href="{{ url_for('action_squat') }}" class="feature-image ">
 											<img src="{{ url_for('static', filename = 'images/ac02.jpg') }}" alt="" />
 										</a>
 									</div>
@@ -480,73 +427,4 @@
 		</section>
 
 	</div>
-
-	<!-- Footer -->
-	<section id="footer">
-		<div class="container">
-			<div class="row">
-				<div class="col-8 col-12-medium">
-
-					<!-- Links -->
-					<section>
-						<h2>Links to Important Stuff</h2>
-						<div>
-							<div class="row">
-								<div class="col-3 col-12-small">
-									<ul class="link-list last-child">
-										<li><a href="#">Facebook</a></li>
-										<li><a href="#">Twitter</a></li>
-										<li><a href="#">Instagram</a></li>
-										<li><a href="#">YouTube</a></li>
-									</ul>
-								</div>
-								<div class="col-3 col-12-small">
-									<ul class="link-list last-child">
-										<li><a href="#">Github</a></li>
-										<li><a href="#">Medium</a></li>
-										<li><a href="#">Blog</a></li>
-										<li><a href="#">Premium</a></li>
-									</ul>
-								</div>
-								<div class="col-3 col-12-small">
-									<ul class="link-list last-child">
-										<li><a href="#">FAQ</a></li>
-										<li><a href="#">Feedback</a></li>
-										<li><a href="#">Contact us</a></li>
-										<li><a href="#"></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</section>
-
-				</div>
-				<div class="col-4 col-12-medium imp-medium">
-
-					<!-- Blurb -->
-					<section>
-						<h2>About us</h2>
-						<p>
-							This application is developed for those who workout at home.<br>
-							Select what you gonna do and stand in front of the camera. 
-							Please make sure the full body is inside the camera view.<br>
-							You can also set how many reps you are going to do. 
-							And the app will record what you have complete.
-						</p>
-					</section>
-
-				</div>
-			</div>
-		</div>
-	</section>
-
-	<!-- Copyright -->
-	<div id="copyright">
-		&copy; All rights reserved. | Design: <a href="http://html5up.net">HTML5 UP</a>
-	</div>
-
-	</div>
-
-</body>
-
-</html>
+{% endblock %}

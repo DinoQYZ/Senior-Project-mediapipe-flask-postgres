@@ -62,3 +62,8 @@ def updateLoginStats(loginStats, cursor, conn):
     cursor.execute("UPDATE loginstats SET loggedin=\'{}\', username=\'{}\';".format(loginStats[0], loginStats[1]))
     conn.commit()
 
+# get record by account
+def getRecordByAccount(loginStats, cursor):
+    cursor.execute("SELECT * FROM myrecord WHERE username=\'{}\';".format(loginStats[1]))
+    result = cursor.fetchall()
+    return result
