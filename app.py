@@ -16,6 +16,7 @@ cursor, conn = connDB({
     'sslmode':'disable'
 })
 
+# initial create table if not exist
 setupTables(cursor, conn)
 # var setup
 currentAction = ''

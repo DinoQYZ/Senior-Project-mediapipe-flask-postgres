@@ -51,7 +51,8 @@ def userRegister(cursor, username, password, password_r):
         logMsg = 'Username {} already exist'.format(username)
     
     return logMsg
-
+    
+# login
 def getLoginStats(cursor):
     cursor.execute("SELECT * FROM loginstats;")
     result = cursor.fetchall()

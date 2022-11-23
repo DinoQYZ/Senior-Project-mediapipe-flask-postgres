@@ -1,32 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% extends 'layout/layout_action.html' %}
+{% block actionBodyContent %}
+<div class="col-12">
+    <h2>肩推</h2>
+    <p>Shoulder Press</p>
+</div>
 
-<head>
-    <title>GYM Assistant</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename = 'func.js') }}"></script>
-
-</head>
-
-<body>
-    <p nowrap>
-        <img src="{{ url_for('video_shoulder_press') }}" />
-
-        <a href="{{ url_for('home') }}"><button>Back</button></a><br>
-    </p>
-
-    <h2>Data : </h2>
-    <table>
-        {% for key, value in stats.items() %}
-        <tr>
-            <th> {{ key }} </th>
-            <td> {{ value }} </td>
-        </tr>
-        {% endfor %}
-    </table>
-
-
-
-</body>
-
-</html>
+<div class="col-12">
+    <img src="{{ url_for('video_shoulder_press') }}" />
+</div>
+{% endblock %}
