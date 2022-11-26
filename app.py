@@ -6,6 +6,7 @@ from flask import Flask, Response, redirect, render_template, url_for, request
 from camera import *
 from dbFunc import *
 from table import *
+from dateSelect import *
 
 # connect db
 cursor, conn = connDB({
@@ -22,9 +23,15 @@ setupTables(cursor, conn)
 # var setup
 currentAction = ''
 loginStats = getLoginStats(cursor)[0]
+dateRange = {
+    'start' : {'year':0, 'month':0, 'day':0},
+    'end' : {'year':0, 'month':0, 'day':0}
+}
+dateRangeSeleted = False
 
 # Flask app
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '#$%^&*'
 
 # default page
 @app.route('/index')
@@ -72,11 +79,25 @@ def logout():
     changeLoginStats(False, '')
     return redirect(url_for('profile'))
 
+@app.route('/deleteAccount')
+def deleteAccount():
+    print('to-do')
+
 # profile
-@app.route('/profile/myrecord', methods=['GET'])
+@app.route('/profile/myrecord', methods=['GET', 'POST'])
 def profile_myrecord():
     record = getRecordByAccount(loginStats, cursor)
-    return render_template('profile_myrecord.html', loginStats=loginStats, record=record)
+    dateRangeSeleted = False
+    if request.method =='POST':
+        dateRange['start']['year'] = request.values['start_y']
+        dateRange['start']['month'] = request.values['start_m']
+        dateRange['start']['day'] = request.values['start_d']
+        dateRange['end']['year'] = request.values['end_y']
+        dateRange['end']['month'] = request.values['end_m']
+        dateRange['end']['day'] = request.values['end_d']
+        dateRangeSeleted = True
+
+    return render_template('profile_myrecord.html', loginStats=loginStats, record=record, dateRange=dateRange, dateRangeSeleted=dateRangeSeleted)
 
 # change login stats
 def changeLoginStats(loggedin, username):

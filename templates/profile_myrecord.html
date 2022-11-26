@@ -7,14 +7,42 @@
         <h3>Welcome to myrecord</h3>
     </header>
     <p>
+        <form method="post">
+            <p>
+                Date<br>
+                <input type="text" name="start_y" size="4" maxlength="4">&emsp;
+                <input type="text" name="start_m" size="4" maxlength="2">&emsp;
+                <input type="text" name="start_d" size="4" maxlength="2">&emsp;
+                ~&emsp;
+                <input type="text" name="end_y" size="4" maxlength="4">&emsp;
+                <input type="text" name="end_m" size="4" maxlength="2">&emsp;
+                <input type="text" name="end_d" size="4" maxlength="2">&emsp;
+                <input type="submit" class="button-large" value="Comfirm">
+            </p>
+            <p>
+                {% if dateRangeSeleted == True %}
+                    {{ dateRange['start']['year'] }}-
+                    {{ dateRange['start']['month'] }}-
+                    {{ dateRange['start']['day'] }} ~
+                    {{ dateRange['end']['year'] }}-
+                    {{ dateRange['end']['month'] }}-
+                    {{ dateRange['end']['day'] }}
+                {% endif %}
+            </p>
+        </form>
         <table>
+            <tr>
+                <td>Action</td>
+                <td>&emsp; Left Reps</td>
+                <td>&emsp; Right Reps</td>
+                <td>&emsp; Date</td>
+            </tr>
             {% for i in record %}
             <tr>
                 <td>{{ i[1] }}</td>
-                <td>{{ i[2] }}</td>
-                <td>{{ i[3] }}</td>
-                <td>{{ i[4] }}</td>
-                <td>{{ i[5] }}</td>
+                <td>&emsp; {{ i[2] }}</td>
+                <td>&emsp; {{ i[3] }}</td>
+                <td>&emsp; {{ i[4] }}</td>
             </tr>
             {% endfor %}
         </table>

@@ -170,11 +170,11 @@ input, select, textarea {
 		font-weight: 300;
 	}
 
-	input, textarea, select {
+	input, textarea, select, option {
 		color: #474f51;
 		font-size: 13.5pt;
 		font-family: 'Yanone Kaffeesatz';
-		line-height: 1.85em;
+		line-height: 1.7em;
 		font-weight: 350;
 	}
 
