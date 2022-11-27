@@ -11,15 +11,9 @@
             <p>
                 <label for="date-range">Date</label><br>
                 <input type="date" name="start_date">
-                &emsp;~&emsp;
+                &ensp;~&ensp;
                 <input type="date" name="end_date">&ensp;
                 <input type="image" src="{{ url_for('static', filename = 'images/search-black.png') }}" alt="submit" height="18px">
-            </p>
-            <p>
-                {% if dateRangeSeleted == True %}
-                    {{ dateRange['start']}}-
-                    {{ dateRange['end']}}
-                {% endif %}
             </p>
         </form>
         <table>
@@ -31,7 +25,7 @@
             </tr>
             {% for i in record %}
             <tr>
-                <td>{{ i[1] }}</td>
+                <td>{{ i[1].replace('_', ' ') }}</td>
                 <td>&emsp; {{ i[2] }}</td>
                 <td>&emsp; {{ i[3] }}</td>
                 <td>&emsp; {{ i[4] }}</td>

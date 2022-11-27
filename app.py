@@ -91,7 +91,9 @@ def profile_myrecord():
     if request.method =='POST':
         dateRange['start'] = request.values['start_date']
         dateRange['end'] = request.values['end_date']
-        dateRangeSeleted = True
+        if dateRange['start']!='' and dateRange['end']!='':
+            dateRangeSeleted = True
+            record = recordInTheRange(dateRange, record)
 
     return render_template('profile_myrecord.html', loginStats=loginStats, record=record, dateRange=dateRange, dateRangeSeleted=dateRangeSeleted)
 
