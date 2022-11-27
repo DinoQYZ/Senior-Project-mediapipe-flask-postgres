@@ -25,3 +25,11 @@ input[type="submit"] {
 #action-list-6{
     display: none;
 }
+
+input[type="date"] {
+    line-height: normal;
+}
+
+input[type="image"]:hover {
+    height: 19px;
+}

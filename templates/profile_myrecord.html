@@ -9,24 +9,16 @@
     <p>
         <form method="post">
             <p>
-                Date<br>
-                <input type="text" name="start_y" size="4" maxlength="4">&emsp;
-                <input type="text" name="start_m" size="4" maxlength="2">&emsp;
-                <input type="text" name="start_d" size="4" maxlength="2">&emsp;
-                ~&emsp;
-                <input type="text" name="end_y" size="4" maxlength="4">&emsp;
-                <input type="text" name="end_m" size="4" maxlength="2">&emsp;
-                <input type="text" name="end_d" size="4" maxlength="2">&emsp;
-                <input type="submit" class="button-large" value="Comfirm">
+                <label for="date-range">Date</label><br>
+                <input type="date" name="start_date">
+                &emsp;~&emsp;
+                <input type="date" name="end_date">&ensp;
+                <input type="image" src="{{ url_for('static', filename = 'images/search-black.png') }}" alt="submit" height="18px">
             </p>
             <p>
                 {% if dateRangeSeleted == True %}
-                    {{ dateRange['start']['year'] }}-
-                    {{ dateRange['start']['month'] }}-
-                    {{ dateRange['start']['day'] }} ~
-                    {{ dateRange['end']['year'] }}-
-                    {{ dateRange['end']['month'] }}-
-                    {{ dateRange['end']['day'] }}
+                    {{ dateRange['start']}}-
+                    {{ dateRange['end']}}
                 {% endif %}
             </p>
         </form>

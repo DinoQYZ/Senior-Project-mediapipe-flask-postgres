@@ -24,8 +24,8 @@ setupTables(cursor, conn)
 currentAction = ''
 loginStats = getLoginStats(cursor)[0]
 dateRange = {
-    'start' : {'year':0, 'month':0, 'day':0},
-    'end' : {'year':0, 'month':0, 'day':0}
+    'start' : '',
+    'end' : ''
 }
 dateRangeSeleted = False
 
@@ -89,12 +89,8 @@ def profile_myrecord():
     record = getRecordByAccount(loginStats, cursor)
     dateRangeSeleted = False
     if request.method =='POST':
-        dateRange['start']['year'] = request.values['start_y']
-        dateRange['start']['month'] = request.values['start_m']
-        dateRange['start']['day'] = request.values['start_d']
-        dateRange['end']['year'] = request.values['end_y']
-        dateRange['end']['month'] = request.values['end_m']
-        dateRange['end']['day'] = request.values['end_d']
+        dateRange['start'] = request.values['start_date']
+        dateRange['end'] = request.values['end_date']
         dateRangeSeleted = True
 
     return render_template('profile_myrecord.html', loginStats=loginStats, record=record, dateRange=dateRange, dateRangeSeleted=dateRangeSeleted)

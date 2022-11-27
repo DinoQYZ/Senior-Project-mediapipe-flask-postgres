@@ -1569,7 +1569,27 @@ input, select, textarea {
 		text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.5);
 	}
 
-		.button-large:hover {
+	.button-small {
+		background-image: -moz-linear-gradient(top, #ed391b, #ce1a00);
+		background-image: -webkit-linear-gradient(top, #ed391b, #ce1a00);
+		background-image: -ms-linear-gradient(top, #ed391b, #ce1a00);
+		background-image: linear-gradient(top, #ed391b, #ce1a00);
+		display: inline-block;
+		background-color: #ed391b;
+		color: #fff;
+		text-decoration: none;
+		font-size: 1em;
+		height: 2em;
+		line-height: 2.125em;
+		font-weight: 300;
+		padding: 0 20px;
+		outline: 0;
+		border-radius: 10px;
+		box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(255, 192, 192, 0.5), inset 0px 0px 0px 2px rgba(255, 96, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.5);
+	}
+
+		.button-large:hover, .button-small:hover {
 			background-image: -moz-linear-gradient(top, #fd492b, #de2a10);
 			background-image: -webkit-linear-gradient(top, #fd492b, #de2a10);
 			background-image: -ms-linear-gradient(top, #fd492b, #de2a10);
@@ -1578,7 +1598,7 @@ input, select, textarea {
 			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(255, 192, 192, 0.5), inset 0px 0px 0px 2px rgba(255, 96, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
 		}
 
-		.button-large:active {
+		.button-large:active, .button-small:active {
 			background-image: -moz-linear-gradient(top, #ce1a00, #ed391b);
 			background-image: -webkit-linear-gradient(top, #ce1a00, #ed391b);
 			background-image: -ms-linear-gradient(top, #ce1a00, #ed391b);
@@ -1816,6 +1836,10 @@ input, select, textarea {
 			}
 
 			.button-large {
+				font-size: 1.5em;
+			}
+
+			.button-small {
 				font-size: 1.5em;
 			}
 
@@ -2059,6 +2083,10 @@ input, select, textarea {
 			}
 
 			.button-large {
+				width: 100%;
+			}
+
+			.button-small {
 				width: 100%;
 			}
 
