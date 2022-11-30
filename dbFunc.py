@@ -51,7 +51,15 @@ def userRegister(cursor, username, password, password_r):
         logMsg = 'Username {} already exist'.format(username)
     
     return logMsg
-    
+
+def deleteUser(cursor, username):
+    logMsg = ''
+    try:
+        cursor.execute("DELETE FROM usertable WHERE username=\'{}\'".format(username))
+    except:
+        return 'failed to delete user'
+    return logMsg
+
 # login
 def getLoginStats(cursor):
     cursor.execute("SELECT * FROM loginstats;")
@@ -67,3 +75,4 @@ def getRecordByAccount(loginStats, cursor):
     cursor.execute("SELECT * FROM myrecord WHERE username=\'{}\';".format(loginStats[1]))
     result = cursor.fetchall()
     return result
+

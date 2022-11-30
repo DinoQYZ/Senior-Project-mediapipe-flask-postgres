@@ -3,19 +3,19 @@
 <!-- Main Content -->
 <section>
     <header>
-        <h2>{{ loginStats[1] }}</h2>
+        <h2 class="bold-word">{{ loginStats[1] }}</h2>
         <h3>Delete your account</h3>
     </header>
     <p>
-        Sed faucibus viverra ligula, non varius magna semper vitae. Donec eu justo ut ipsum
-        hendrerit congue nec eu risus. Cum sociis natoque penatibus et magnis dis parturient
-        montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetur adipiscing
-        egestas tempus. Cras convallis odio sit amet risus convallis porttitor. Integer
-        vehicula fermentum ligula at pretium. Suspendisse semper iaculis eros, eu aliquam
-        justo imperdiet vel. Proin nec dictum mi. Duis commodo enim non tellus interdum
-        elit. Suspendisse fermentum adipiscing nisi, a tempor libero malesuada at. Morbi
-        lacinia dui adipiscing risus eleifend tincidunt. Proin eu mauris eu tellus eleifend
-        hendrerit.
+        <img src="{{ url_for('static', filename = 'images/warning.png') }}" alt="warning sign" class="warn-sign"/>
+    </p>
+    <p>
+        <form action="{{ url_for('profile_del_acc') }}"  method="post">
+            <input type="submit" class="button-large" title="Delete" value="刪除帳號"></a>
+        </form>
+    </p>
+    <p class="warn-text bold-word"> 
+        All your history will be deleted
     </p>
 </section>
 {% endblock %}

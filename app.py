@@ -79,10 +79,6 @@ def logout():
     changeLoginStats(False, '')
     return redirect(url_for('profile'))
 
-@app.route('/deleteAccount')
-def deleteAccount():
-    print('to-do')
-
 # profile
 @app.route('/profile/myrecord', methods=['GET', 'POST'])
 def profile_myrecord():
@@ -97,8 +93,12 @@ def profile_myrecord():
 
     return render_template('profile_myrecord.html', loginStats=loginStats, record=record, dateRange=dateRange, dateRangeSeleted=dateRangeSeleted)
 
-@app.route('/profile/del_account')
+@app.route('/profile/del_account', methods=['GET', 'POST'])
 def profile_del_acc():
+    if request.method == 'POST':
+        logMsg = deleteUser(cursor, loginStats[1])
+        logging.info(logMsg)
+        return redirect(url_for('logout'))
     return render_template('profile_del_acc.html', loginStats=loginStats)
 
 # change login stats

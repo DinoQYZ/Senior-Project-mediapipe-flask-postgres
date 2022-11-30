@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:400,300,200");
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,200");
 
 /*
 	Halcyonic by HTML5 UP
@@ -165,7 +165,7 @@ input, select, textarea {
 		background: #D4D9DD url("images/bg03.jpg");
 		color: #474f51;
 		font-size: 13.5pt;
-		font-family: 'Yanone Kaffeesatz';
+		font-family: 'Source Sans Pro';
 		line-height: 1.85em;
 		font-weight: 300;
 	}
@@ -173,7 +173,7 @@ input, select, textarea {
 	input, textarea, select, option {
 		color: #474f51;
 		font-size: 13.5pt;
-		font-family: 'Yanone Kaffeesatz';
+		font-family: 'Source Sans Pro';
 		line-height: 1.7em;
 		font-weight: 350;
 	}
