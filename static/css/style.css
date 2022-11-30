@@ -33,3 +33,14 @@ input[type="date"] {
 input[type="image"]:hover {
     height: 19px;
 }
+
+.feature-image img{
+    max-width: 100%;
+    transform: scale(1);
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.feature-image:hover img{
+    transform: scale(1.02);
+}

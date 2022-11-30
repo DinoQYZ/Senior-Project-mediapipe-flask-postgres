@@ -97,6 +97,10 @@ def profile_myrecord():
 
     return render_template('profile_myrecord.html', loginStats=loginStats, record=record, dateRange=dateRange, dateRangeSeleted=dateRangeSeleted)
 
+@app.route('/profile/del_account')
+def profile_del_acc():
+    return render_template('profile_del_acc.html', loginStats=loginStats)
+
 # change login stats
 def changeLoginStats(loggedin, username):
     loginStats[0] = loggedin
