@@ -1,7 +1,7 @@
 import logging
 
 def setupTables(cursor, conn):
-    L = [createUserTable, createRecordTable, createLoginStats]
+    L = [createUserTable, createRecordTable, createGoalTable, createLoginStats]
     for func in L:
         try:
             func(cursor, conn)
@@ -27,6 +27,19 @@ def createRecordTable(cursor, conn):
         reps_l INT,
         reps_r INT,
         time VARCHAR(70)
+    );
+    """
+    cursor.execute(sql)
+    conn.commit()
+
+def createGoalTable(cursor, conn):
+    sql = """
+    CREATE TABLE mygoal(
+        username VARCHAR(20),
+        action VARCHAR(40),
+        reps INT,
+        time VARCHAR(70),
+        done BOOLEAN
     );
     """
     cursor.execute(sql)
