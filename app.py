@@ -93,7 +93,11 @@ def profile_myrecord():
 
     return render_template('profile_myrecord.html', loginStats=loginStats, record=record, dateRange=dateRange, dateRangeSeleted=dateRangeSeleted)
 
-@app.route('/profile/del_account', methods=['GET', 'POST'])
+@app.route('/profile/goal', methods=['GET', 'POST'])
+def profile_goal():
+    return render_template('profile_goal.html', loginStats=loginStats)
+
+@app.route('/profile/del-account', methods=['GET', 'POST'])
 def profile_del_acc():
     if request.method == 'POST':
         logMsg = deleteUser(cursor, loginStats[1])

@@ -1,0 +1,48 @@
+{% extends 'layout/layout_profile.html' %}
+{% block profileBodyContent %}
+<!-- Main Content -->
+<section>
+    <header>
+        <h2 class="bold-word">{{ loginStats[1] }}</h2>
+        <h3>Welcome to your goal</h3>
+    </header>
+    <p>
+        <form method="post">
+            <p>
+                <label for="date-range">Date</label><br>
+                <input type="date" name="start_date">
+                &ensp;~&ensp;
+                <input type="date" name="end_date">&ensp;
+                <input type="image" src="{{ url_for('static', filename = 'images/search-black.png') }}" alt="submit" height="18px">
+            </p>
+        </form>
+        <table>
+            <tr>
+                <td>Action</td>
+                <td>&emsp; Left Reps</td>
+                <td>&emsp; Right Reps</td>
+                <td>&emsp; Date</td>
+            </tr>
+            {% for i in record %}
+            <tr>
+                <td>{{ i[1].replace('_', ' ') }}</td>
+                <td>&emsp; {{ i[2] }}</td>
+                <td>&emsp; {{ i[3] }}</td>
+                <td>&emsp; {{ i[4] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </p>
+    <p>
+        Sed faucibus viverra ligula, non varius magna semper vitae. Donec eu justo ut ipsum
+        hendrerit congue nec eu risus. Cum sociis natoque penatibus et magnis dis parturient
+        montes, nascetur ridiculus mus. Lorem ipsum dolor sit amet, consectetur adipiscing
+        egestas tempus. Cras convallis odio sit amet risus convallis porttitor. Integer
+        vehicula fermentum ligula at pretium. Suspendisse semper iaculis eros, eu aliquam
+        justo imperdiet vel. Proin nec dictum mi. Duis commodo enim non tellus interdum
+        elit. Suspendisse fermentum adipiscing nisi, a tempor libero malesuada at. Morbi
+        lacinia dui adipiscing risus eleifend tincidunt. Proin eu mauris eu tellus eleifend
+        hendrerit.
+    </p>
+</section>
+{% endblock %}
