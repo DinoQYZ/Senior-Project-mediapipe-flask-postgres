@@ -9,26 +9,32 @@
     <p>
         <form method="post">
             <p>
+                <label>Action</label><br>
+                <select name="action_goal" id="action_goal">
+                    <option value="biceps_curl">Biceps curl</option>
+                    <option value="lateral_raise">Lateral raise</option>
+                    <option value="shoulder_press">Shoulder press</option>
+                    <option value="squat">Squat</option>
+                </select><br>
+
                 <label for="date-range">Date</label><br>
-                <input type="date" name="start_date">
-                &ensp;~&ensp;
-                <input type="date" name="end_date">&ensp;
-                <input type="image" src="{{ url_for('static', filename = 'images/search-black.png') }}" alt="submit" height="18px">
+                <input type="date" name="goal_date"><br>
+
+                <label>Reps</label><br>
+                <input type="number" name="goal_reps" min="1" size="99" value="8" style="height: 26px; width: 50px;">
+                <input type="image" src="{{ url_for('static', filename = 'images/enter.png') }}" alt="submit" height="18px">
             </p>
         </form>
         <table>
             <tr>
                 <td>Action</td>
-                <td>&emsp; Left Reps</td>
-                <td>&emsp; Right Reps</td>
+                <td>&emsp; Reps</td>
                 <td>&emsp; Date</td>
+                <td>&emsp; Status</td>
             </tr>
-            {% for i in record %}
+            {% for i in goal %}
             <tr>
-                <td>{{ i[1].replace('_', ' ') }}</td>
-                <td>&emsp; {{ i[2] }}</td>
-                <td>&emsp; {{ i[3] }}</td>
-                <td>&emsp; {{ i[4] }}</td>
+                
             </tr>
             {% endfor %}
         </table>
