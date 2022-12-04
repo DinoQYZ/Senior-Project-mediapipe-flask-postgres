@@ -28,6 +28,11 @@ dateRange = {
     'end' : ''
 }
 dateRangeSeleted = False
+goalStats = {
+    'date' : '',
+    'action' : '',
+    'reps' : '',
+}
 
 # Flask app
 app = Flask(__name__)
@@ -95,6 +100,12 @@ def profile_myrecord():
 
 @app.route('/profile/goal', methods=['GET', 'POST'])
 def profile_goal():
+    if request.method =='POST':
+        goalStats['date'] = request.values['goal_date']
+        goalStats['action'] = request.values['action_goal']
+        goalStats['reps'] = request.values['goal_reps']
+        if goalStats['start']!='' and goalStats['action']!='' and goalStats['reps']!='':
+            print('to-do')
     return render_template('profile_goal.html', loginStats=loginStats)
 
 @app.route('/profile/del-account', methods=['GET', 'POST'])
