@@ -1,0 +1,33 @@
+{% extends 'layout/layout_profile.html' %}
+{% block profileBodyContent %}
+<!-- Main Content -->
+<section>
+    <header>
+        <h2 class="bold-word">{{ loginStats[1] }}</h2>
+        <h3>Welcome to your goal</h3>
+    </header>
+    <p>
+        <form method="post">
+            <p>
+                <label>Action</label><br>
+                <select name="action_goal" id="action_goal">
+                    <option value="biceps_curl">Biceps curl</option>
+                    <option value="lateral_raise">Lateral raise</option>
+                    <option value="shoulder_press">Shoulder press</option>
+                    <option value="squat">Squat</option>
+                </select><br>
+
+                <label for="date-range">Date</label><br>
+                <input type="date" name="goal_date"><br>
+
+                <label>Reps</label><br>
+                <input type="number" name="goal_reps" min="1" size="99" value="8" style="height: 26px; width: 50px;">
+
+                <br><br>
+                <input type="submit" class="button-large" value="Submit">
+            </p>
+        </form>
+        </table>
+    </p>
+</section>
+{% endblock %}
