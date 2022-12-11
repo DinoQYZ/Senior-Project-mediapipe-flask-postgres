@@ -76,3 +76,23 @@ def getRecordByAccount(loginStats, cursor):
     result = cursor.fetchall()
     return result
 
+# insert new goal
+def addNewGoal(loginStats, cursor, conn, goalStats):
+    goal = getGoalByAccount(loginStats, cursor)
+    goalExist = False
+    for i in goal:
+        if i[1]==goalStats['action'] and i[2]==int(goalStats['reps']) and i[3]==goalStats['date']:
+            goalExist = True
+            break
+    if goalExist == False:
+        cursor.execute("""
+                INSERT INTO mygoal (username, action, reps, time, done)
+                VALUES (\'{}\', \'{}\', \'{}\', \'{}\', \'{}\')
+                """.format(loginStats[1], goalStats['action'], int(goalStats['reps']), goalStats['date'], False))
+        conn.commit()
+
+# get goal by account
+def getGoalByAccount(loginStats, cursor):
+    cursor.execute("SELECT * FROM mygoal WHERE username=\'{}\' ORDER BY time ASC;".format(loginStats[1]))
+    result = cursor.fetchall()
+    return result

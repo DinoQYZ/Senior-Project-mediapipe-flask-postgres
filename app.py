@@ -88,25 +88,35 @@ def logout():
 @app.route('/profile/myrecord', methods=['GET', 'POST'])
 def profile_myrecord():
     record = getRecordByAccount(loginStats, cursor)
-    dateRangeSeleted = False
     if request.method =='POST':
         dateRange['start'] = request.values['start_date']
         dateRange['end'] = request.values['end_date']
         if dateRange['start']!='' and dateRange['end']!='':
-            dateRangeSeleted = True
             record = recordInTheRange(dateRange, record)
 
-    return render_template('profile_myrecord.html', loginStats=loginStats, record=record, dateRange=dateRange, dateRangeSeleted=dateRangeSeleted)
+    return render_template('profile_myrecord.html', loginStats=loginStats, record=record, dateRange=dateRange)
 
 @app.route('/profile/goal', methods=['GET', 'POST'])
 def profile_goal():
+    goal = getGoalByAccount(loginStats, cursor)
     if request.method =='POST':
         goalStats['date'] = request.values['goal_date']
         goalStats['action'] = request.values['action_goal']
         goalStats['reps'] = request.values['goal_reps']
-        if goalStats['start']!='' and goalStats['action']!='' and goalStats['reps']!='':
-            print('to-do')
-    return render_template('profile_goal.html', loginStats=loginStats)
+        if goalStats['date']!='' and goalStats['action']!='' and goalStats['reps']!='':
+            addNewGoal(loginStats, cursor, conn, goalStats)
+    return render_template('profile_goal.html', loginStats=loginStats, goal=goal)
+
+@app.route('/profile/edit-goal', methods=['GET', 'POST'])
+def profile_edit_goal():
+    if request.method =='POST':
+        goalStats['date'] = request.values['goal_date']
+        goalStats['action'] = request.values['action_goal']
+        goalStats['reps'] = request.values['goal_reps']
+        if goalStats['date']!='' and goalStats['action']!='' and goalStats['reps']!='':
+            addNewGoal(loginStats, cursor, conn, goalStats)
+            return redirect(url_for('profile_goal'))
+    return render_template('profile_edit_goal.html', loginStats=loginStats)
 
 @app.route('/profile/del-account', methods=['GET', 'POST'])
 def profile_del_acc():
