@@ -6,7 +6,7 @@ from flask import Flask, Response, redirect, render_template, url_for, request
 from camera import *
 from dbFunc import *
 from table import *
-from dateSelect import *
+from dateFunc import *
 
 # connect db
 cursor, conn = connDB({
@@ -98,13 +98,15 @@ def profile_myrecord():
 
 @app.route('/profile/goal', methods=['GET', 'POST'])
 def profile_goal():
+    record = getRecordByAccount(loginStats, cursor)
     goal = getGoalByAccount(loginStats, cursor)
+    goal = determineGoalDone(loginStats, cursor, conn, goal, record)
     if request.method =='POST':
-        goalStats['date'] = request.values['goal_date']
-        goalStats['action'] = request.values['action_goal']
-        goalStats['reps'] = request.values['goal_reps']
-        if goalStats['date']!='' and goalStats['action']!='' and goalStats['reps']!='':
-            addNewGoal(loginStats, cursor, conn, goalStats)
+        dateRange['start'] = request.values['start_date']
+        dateRange['end'] = request.values['end_date']
+        if dateRange['start']!='' and dateRange['end']!='':
+            goal = goalInTheRange(dateRange, goal)
+
     return render_template('profile_goal.html', loginStats=loginStats, goal=goal)
 
 @app.route('/profile/edit-goal', methods=['GET', 'POST'])

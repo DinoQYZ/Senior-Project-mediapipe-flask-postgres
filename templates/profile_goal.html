@@ -9,7 +9,11 @@
     <p>
         <form method="post">
             <p>
-                
+                <label for="date-range">Date</label><br>
+                <input type="date" name="start_date">
+                &ensp;~&ensp;
+                <input type="date" name="end_date">&ensp;
+                <input type="image" src="{{ url_for('static', filename = 'images/search-black.png') }}" alt="submit" height="18px">
             </p>
         </form>
         <table>

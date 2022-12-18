@@ -96,3 +96,10 @@ def getGoalByAccount(loginStats, cursor):
     cursor.execute("SELECT * FROM mygoal WHERE username=\'{}\' ORDER BY time ASC;".format(loginStats[1]))
     result = cursor.fetchall()
     return result
+
+def changeGoalToDone(cursor, conn, goalItem):
+    cursor.execute("""
+                UPDATE mygoal SET done=\'{}\'
+                WHERE username=\'{}\' AND action=\'{}\' AND reps={} AND time=\'{}\'
+                """.format(True, goalItem[0], goalItem[1], goalItem[2], goalItem[3]))
+    conn.commit()
