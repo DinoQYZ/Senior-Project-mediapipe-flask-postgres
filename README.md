@@ -3,9 +3,10 @@ AI pose estimation using Mediapipe x Flask
 
 ## Step 1 資料庫設定
 
+### method 1 自建資料庫
 建立資料庫：
-程式碼預設連線資料為
-使用的是postgres資料庫
+使用的是[postgresql](https://www.postgresql.org/)資料庫 <br>
+程式碼內預設連線資料為
 
 - host: 192.168.56.1
 - dbname: dino
@@ -13,7 +14,9 @@ AI pose estimation using Mediapipe x Flask
 - password: dinopwd
 - sslmode: disable
 
-如果已經有docker可以直接docker compose up裡面有已經設定好的database
+### method 2 Docker-compose
+若已安裝過Docker可以直接docker compose up裡面有已經設定好的database <br>
+Windows 安裝 [Docker](https://learn.microsoft.com/zh-tw/virtualization/windowscontainers/manage-docker/configure-docker-daemon)
 
 ## Step 2 執行app.py
 執行完後會出現ip位置
