@@ -16,6 +16,7 @@ AI pose estimation using Mediapipe x Flask
 
 ### method 2 Docker-compose
 若已安裝過Docker可以直接docker compose up裡面有已經設定好的database <br>
+![image](https://user-images.githubusercontent.com/104751397/210291331-335e4d3e-8593-4124-b93f-a8d00c4a05ad.png)
 Windows 安裝 [Docker](https://learn.microsoft.com/zh-tw/virtualization/windowscontainers/manage-docker/configure-docker-daemon)
 
 ## Step 2 執行app.py
